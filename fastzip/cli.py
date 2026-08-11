@@ -144,6 +144,7 @@ def main():
                         if answer2 == "y":
                             print("")
                             sys.exit(1)
+
                         else:
                             print("Завершаю работу.")
                             sys.exit(1)

@@ -19,7 +19,7 @@ def get_drive_service(credentials_path: Path, token_path: Path):
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(str(credentials_path), SCOPES)
-            creds = flow.яrun_local_server(port=0)
+            creds = flow.run_local_server(port=0)
 
         with open(token_path, 'w') as token:
             token.write(creds.to_json())

@@ -19,6 +19,7 @@ def load_config() -> configparser.ConfigParser:
         config.set("paths", "dest_dir", default_zips)
         save_config(config)
 
+
     if not config.has_section("google"):
         config.add_section("google")
         config.set("google", "sync_enabled", "false")
