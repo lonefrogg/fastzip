@@ -19,6 +19,13 @@ def load_config() -> configparser.ConfigParser:
         config.set("paths", "dest_dir", default_zips)
         save_config(config)
 
+    if not config.has_section("google"):
+        config.add_section("google")
+        config.set("google", "sync_enabled", "false")
+        config.set("google", "credentials_path", str(CONFIG_DIR / "credentials.json"))
+        config.set("google", "token_path", str(CONFIG_DIR / "token.json"))
+        save_config(config)
+
     return config
 
 
@@ -27,3 +34,4 @@ def save_config(config: configparser.ConfigParser):
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     with open(CONFIG_FILE, "w", encoding="utf-8") as configfile:
         config.write(configfile)
+

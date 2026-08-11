@@ -2,6 +2,7 @@ import sys
 import argparse
 import shutil
 import subprocess
+from operator import truediv
 from pathlib import Path
 from datetime import datetime
 
@@ -117,11 +118,48 @@ def main():
     if result.returncode == 0:
         print(f"Успех! Архив сохранён: {archive_path}")
         log_msg(log_file, f"Успешно: '{folder_name}' упакован в '{archive_path}'")
+
+        sync_enabled = config.getboolean("google", "sync_enabled", fallback=False)
+        if sync_enabled:
+            answer = input("Сохранить файл на google drive? (y/n)\n").strip().lower()
+            if answer == "y":
+                credits_path = Path(config.get("google", "credentials_path"))
+                token_path = Path(config.get("google", "token_path"))
+
+                if not credits_path.exists():
+                    print("Синхронизация включена, но не найден creditials.json")
+                    print("mv ваш_файл ~/.config/fastzip/credentials.json")
+                    sys.exit(1)
+                else:
+                    try:
+                        from fastzip.drive import get_drive_service, upload_to_drive
+
+                        print("Сохраняю файл в Google drive...")
+                        service = get_drive_service(credits_path, token_path)
+                        file_id = upload_to_drive(service, archive_path)
+
+                        answer2 = input(f"Файл успешно загружен в Google Drive! (ID: {file_id}). Открыть доступ к нему по ссылке? (y/n)\n").strip().lower()
+                        log_msg(log_file, f"Загружено в облако: {archive_name}")
+
+                        if answer2 == "y":
+                            print("")
+                            sys.exit(1)
+                        else:
+                            print("Завершаю работу.")
+                            sys.exit(1)
+
+                    except Exception as e:
+                        print(f"Ошибка при загрузке в облако: {e}")
+                        log_msg(log_file, f"Ошибка загрузки в Google Drive: {e}")
+            else:
+                print("Завершаю работу.")
+                sys.exit(1)
+
+
     else:
         print("Произошла ошибка при создании архива.")
         log_msg(log_file, f"Ошибка: сбой команды zip при упаковке '{folder_name}'")
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
