@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fastzip"
+version = "0.1.0"
+description = "Fast map zipping tool"
+authors = [
+    {name = "Lonefrogg"}
+]
+
+[project.scripts]
+# Эта строчка создает консольную команду fastzip,
+# которая запускает функцию main() из файла fastzip/cli.py
+fastzip = "fastzip.cli:main"
