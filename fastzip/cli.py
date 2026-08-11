@@ -23,16 +23,31 @@ def main():
     # 2. Обновляем конфиг, если переданы флаги
     config_updated = False
 
+    # 2. Обновляем конфиг, если переданы флаги
+    config_updated = False
+
     if args.source:
-        new_source = str(Path(args.source).resolve())
-        config.set("paths", "source_dir", new_source)
-        print(f"✅ Настройка обновлена: source_dir = {new_source}")
+        new_source_path = Path(args.source).resolve()
+
+        # Проверяем сам объект Path
+        if not new_source_path.is_dir():
+            print(f"Ошибка: директория '{new_source_path}' не существует")
+            sys.exit(1)
+
+        # Записываем в конфиг уже в виде строки
+        config.set("paths", "source_dir", str(new_source_path))
+        print(f"✅ Настройка обновлена: source_dir = {new_source_path}")
         config_updated = True
 
     if args.dest:
-        new_dest = str(Path(args.dest).resolve())
-        config.set("paths", "dest_dir", new_dest)
-        print(f"✅ Настройка обновлена: dest_dir = {new_dest}")
+        new_dest_path = Path(args.dest).resolve()
+
+        if not new_dest_path.is_dir():
+            print(f"Ошибка: директория '{new_dest_path}' не существует")
+            sys.exit(1)
+
+        config.set("paths", "dest_dir", str(new_dest_path))
+        print(f"✅ Настройка обновлена: dest_dir = {new_dest_path}")
         config_updated = True
 
     if config_updated:
