@@ -142,19 +142,40 @@ def main():
                         log_msg(log_file, f"Загружено в облако: {archive_name}")
 
                         if answer2 == "y":
-                            print("")
+                            try:
+                                new_permission = {
+                                    'type': 'anyone',
+                                    'role': 'reader',
+                                }
+                                service.permissions().create(
+                                    fileId = file_id,
+                                    body = new_permission
+                                ).execute()
+                                shared_file_link = service.files().get(
+                                    fileId=file_id,
+                                    fields = 'webViewLink'
+                                ).execute()
+                                clean_link = shared_file_link.get('webViewLink')
+
+                                print("Файл успешно расшарен!\n", clean_link)
+                                sys.exit(0)
+
+                            except Exception as e:
+                                print(f"Ошибка при расшаривании файла: {e}")
+                                log_msg(log_file, f"Ошибка при расшаривании файла: {e}")
                             sys.exit(1)
 
                         else:
                             print("Завершаю работу.")
-                            sys.exit(1)
+                            sys.exit(0)
 
                     except Exception as e:
                         print(f"Ошибка при загрузке в облако: {e}")
                         log_msg(log_file, f"Ошибка загрузки в Google Drive: {e}")
+                        sys.exit(1)
             else:
                 print("Завершаю работу.")
-                sys.exit(1)
+                sys.exit(0)
 
 
     else:

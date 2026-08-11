@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bca83267-688a-4348-8f51-951434216b24" name="Changes" comment="Рефакторинг читаемости кода">
-      <change afterPath="$PROJECT_DIR$/fastzip/drive.py" afterDir="false" />
+    <list default="true" id="bca83267-688a-4348-8f51-951434216b24" name="Changes" comment="Зависимости для google cloude">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fastzip/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastzip/cli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fastzip/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastzip/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +116,31 @@
       <option name="project" value="LOCAL" />
       <updated>1786468455637</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Загрузка файла в google drive">
+      <option name="closed" value="true" />
+      <created>1786472637520</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1786472637520</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Загрузка файла в google drive">
+      <option name="closed" value="true" />
+      <created>1786472853024</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1786472853024</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Зависимости для google cloude">
+      <option name="closed" value="true" />
+      <created>1786472883818</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1786472883818</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -138,7 +159,9 @@
     <MESSAGE value="test" />
     <MESSAGE value="-s and -d test if directory is active" />
     <MESSAGE value="Рефакторинг читаемости кода" />
-    <option name="LAST_COMMIT_MESSAGE" value="Рефакторинг читаемости кода" />
+    <MESSAGE value="Загрузка файла в google drive" />
+    <MESSAGE value="Зависимости для google cloude" />
+    <option name="LAST_COMMIT_MESSAGE" value="Зависимости для google cloude" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
