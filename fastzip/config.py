@@ -6,7 +6,7 @@ CONFIG_FILE = CONFIG_DIR / "config.ini"
 
 
 def load_config() -> configparser.ConfigParser:
-    """Загружает конфиг, если его нет — создает базовую структуру."""
+    # Загрузка/создание конфига
     config = configparser.ConfigParser()
     if CONFIG_FILE.exists():
         config.read(CONFIG_FILE, encoding="utf-8")
@@ -23,7 +23,7 @@ def load_config() -> configparser.ConfigParser:
 
 
 def save_config(config: configparser.ConfigParser):
-    """Сохраняет изменения в файл конфигурации."""
+    # Сохранение изменений в конфигурации
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     with open(CONFIG_FILE, "w", encoding="utf-8") as configfile:
         config.write(configfile)
