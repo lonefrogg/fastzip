@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bca83267-688a-4348-8f51-951434216b24" name="Changes" comment="Зависимости для google cloude">
+    <list default="true" id="bca83267-688a-4348-8f51-951434216b24" name="Changes" comment="синхронизация google cloude">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fastzip/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastzip/cli.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fastzip/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastzip/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fastzip/sync.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786472883818</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="синхронизация google cloude">
+      <option name="closed" value="true" />
+      <created>1786473546506</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1786473546506</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -161,7 +171,8 @@
     <MESSAGE value="Рефакторинг читаемости кода" />
     <MESSAGE value="Загрузка файла в google drive" />
     <MESSAGE value="Зависимости для google cloude" />
-    <option name="LAST_COMMIT_MESSAGE" value="Зависимости для google cloude" />
+    <MESSAGE value="синхронизация google cloude" />
+    <option name="LAST_COMMIT_MESSAGE" value="синхронизация google cloude" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

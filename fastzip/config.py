@@ -6,10 +6,11 @@ CONFIG_FILE = CONFIG_DIR / "config.ini"
 
 
 def load_config() -> configparser.ConfigParser:
-    # Загрузка/создание конфига
     config = configparser.ConfigParser()
     if CONFIG_FILE.exists():
         config.read(CONFIG_FILE, encoding="utf-8")
+
+    config_changed = False
 
     if not config.has_section("paths"):
         config.add_section("paths")
@@ -17,14 +18,16 @@ def load_config() -> configparser.ConfigParser:
         default_zips = str(Path.home() / "Documents/work/worldzips")
         config.set("paths", "source_dir", default_saves)
         config.set("paths", "dest_dir", default_zips)
-        save_config(config)
-
+        config_changed = True
 
     if not config.has_section("google"):
         config.add_section("google")
         config.set("google", "sync_enabled", "false")
         config.set("google", "credentials_path", str(CONFIG_DIR / "credentials.json"))
         config.set("google", "token_path", str(CONFIG_DIR / "token.json"))
+        config_changed = True
+
+    if config_changed:
         save_config(config)
 
     return config

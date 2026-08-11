@@ -119,7 +119,8 @@ def main():
         print(f"Успех! Архив сохранён: {archive_path}")
         log_msg(log_file, f"Успешно: '{folder_name}' упакован в '{archive_path}'")
 
-        sync_enabled = config.getboolean("google", "sync_enabled", fallback=False)
+        #sync_enabled = config.getboolean("google", "sync_enabled", fallback=False)
+        sync_enabled = 1
         if sync_enabled:
             answer = input("Сохранить файл на google drive? (y/n)\n").strip().lower()
             if answer == "y":
