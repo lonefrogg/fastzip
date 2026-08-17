@@ -142,12 +142,13 @@ def main():
                         print("Сохраняю файл в Google drive...")
                         service = get_drive_service(credits_path, token_path)
                         file_id = upload_to_drive(service, archive_path)
+                        log_msg(log_file, f"Загружено в облако: {archive_name}")
 
                         if config.getboolean("google", "auto_share", fallback=False):
                             answer2 = "y"
                         else:
                             answer2 = input(f"Файл успешно загружен в Google Drive! (ID: {file_id}). Открыть доступ к нему по ссылке? (y/n)\n").strip().lower()
-                        log_msg(log_file, f"Загружено в облако: {archive_name}")
+
 
                         if answer2 == "y":
                             try:

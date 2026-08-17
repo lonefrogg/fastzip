@@ -31,6 +31,7 @@ def load_config() -> configparser.ConfigParser:
         config.set("google", "google_sync", "false")
         config_changed = True
 
+
     if not config.has_option("google", "auto_sync"):
         config.set("google", "auto_sync", "false")
         config_changed = True
