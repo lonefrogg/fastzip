@@ -125,9 +125,9 @@ def main():
             if config.getboolean("google", "auto_sync", fallback=False):
                 answer = 'y'
             else:
-                answer = input("Save file to Google Drive? (y/n)\n").strip().lower()
+                answer = input("Save file to Google Drive? (Y/N)\n").strip().lower()
 
-            if answer == "y":
+            if answer == "y" or answer == "Y":
                 credits_path = Path(config.get("google", "credentials_path"))
                 token_path = Path(config.get("google", "token_path"))
 
@@ -146,10 +146,10 @@ def main():
                         if config.getboolean("google", "auto_share", fallback=False):
                             answer2 = "y"
                         else:
-                            answer2 = input(f"File successfully uploaded to Google Drive! (ID: {file_id}). Share it via link? (y/n)\n").strip().lower()
+                            answer2 = input(f"File successfully uploaded to Google Drive! (ID: {file_id}). Share it via link? (Y/N)\n").strip().lower()
                         log_msg(log_file, f"Uploaded to cloud: {archive_name}")
 
-                        if answer2 == "y":
+                        if answer2 == "y" or answer2 == "Y":
                             try:
                                 new_permission = {
                                     'type': 'anyone',
