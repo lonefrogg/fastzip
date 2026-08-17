@@ -119,8 +119,7 @@ def main():
         print(f"Успех! Архив сохранён: {archive_path}")
         log_msg(log_file, f"Успешно: '{folder_name}' упакован в '{archive_path}'")
 
-        #sync_enabled = config.getboolean("google", "sync_enabled", fallback=False)
-        sync_enabled = 1
+        sync_enabled = config.getboolean("google", "sync_enabled", fallback=False)
         if sync_enabled:
             answer = input("Сохранить файл на google drive? (y/n)\n").strip().lower()
             if answer == "y":
@@ -158,7 +157,6 @@ def main():
                                 ).execute()
                                 clean_link = shared_file_link.get('webViewLink')
 
-                                print("Файл успешно расшарен!\n", clean_link)
                                 sys.exit(0)
 
                             except Exception as e:
