@@ -22,10 +22,23 @@ def load_config() -> configparser.ConfigParser:
 
     if not config.has_section("google"):
         config.add_section("google")
-        config.set("google", "sync_enabled", "false")
         config.set("google", "credentials_path", str(CONFIG_DIR / "credentials.json"))
         config.set("google", "token_path", str(CONFIG_DIR / "token.json"))
         config_changed = True
+
+
+    if not config.has_option("google", "google_sync"):
+        config.set("google", "google_sync", "false")
+        config_changed = True
+
+    if not config.has_option("google", "auto_sync"):
+        config.set("google", "auto_sync", "false")
+        config_changed = True
+
+    if not config.has_option("google", "auto_share"):
+        config.set("google", "auto_share", "false")
+        config_changed = True
+
 
     if config_changed:
         save_config(config)
@@ -38,4 +51,3 @@ def save_config(config: configparser.ConfigParser):
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     with open(CONFIG_FILE, "w", encoding="utf-8") as configfile:
         config.write(configfile)
-

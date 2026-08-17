@@ -119,9 +119,14 @@ def main():
         print(f"Успех! Архив сохранён: {archive_path}")
         log_msg(log_file, f"Успешно: '{folder_name}' упакован в '{archive_path}'")
 
-        sync_enabled = config.getboolean("google", "sync_enabled", fallback=False)
+        sync_enabled = config.getboolean("google", "google_sync", fallback=False)
         if sync_enabled:
-            answer = input("Сохранить файл на google drive? (y/n)\n").strip().lower()
+
+            if config.getboolean("google", "auto_sync", fallback=False):
+                answer = 'y'
+            else:
+                answer = input("Сохранить файл на google drive? (y/n)\n").strip().lower()
+
             if answer == "y":
                 credits_path = Path(config.get("google", "credentials_path"))
                 token_path = Path(config.get("google", "token_path"))
@@ -138,7 +143,10 @@ def main():
                         service = get_drive_service(credits_path, token_path)
                         file_id = upload_to_drive(service, archive_path)
 
-                        answer2 = input(f"Файл успешно загружен в Google Drive! (ID: {file_id}). Открыть доступ к нему по ссылке? (y/n)\n").strip().lower()
+                        if config.getboolean("google", "auto_share", fallback=False):
+                            answer2 = "y"
+                        else:
+                            answer2 = input(f"Файл успешно загружен в Google Drive! (ID: {file_id}). Открыть доступ к нему по ссылке? (y/n)\n").strip().lower()
                         log_msg(log_file, f"Загружено в облако: {archive_name}")
 
                         if answer2 == "y":
@@ -156,6 +164,7 @@ def main():
                                     fields = 'webViewLink'
                                 ).execute()
                                 clean_link = shared_file_link.get('webViewLink')
+                                print(clean_link)
 
                                 sys.exit(0)
 
