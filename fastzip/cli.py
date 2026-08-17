@@ -14,10 +14,10 @@ def main():
     config = load_config()
 
     # Парсер аргументов
-    parser = argparse.ArgumentParser(description="Быстрая упаковка папок в zip-архив с сохранением настроек.")
-    parser.add_argument("folder_name", nargs="?", help="Имя папки для упаковки")
-    parser.add_argument("-s", "--source", help="Установить новую директорию source_dir в конфиг навсегда")
-    parser.add_argument("-d", "--dest", help="Установить новую директорию dest_dir в конфиг навсегда")
+    parser = argparse.ArgumentParser(description="Quick packaging of folders into a zip archive with settings preserved.")
+    parser.add_argument("folder_name", nargs="?", help="Folder name to pack")
+    parser.add_argument("-s", "--source", help="Set new source_dir directory in config permanently")
+    parser.add_argument("-d", "--dest", help="Set new dest_dir directory in config permanently")
     args = parser.parse_args()
 
     # Обновление конфига
@@ -27,22 +27,22 @@ def main():
         new_source_path = Path(args.source).resolve()
 
         if not new_source_path.is_dir():
-            print(f"Ошибка: директория '{new_source_path}' не существует")
+            print(f"Error: directory '{new_source_path}' does not exist")
             sys.exit(1)
 
         config.set("paths", "source_dir", str(new_source_path))
-        print(f"Настройка обновлена: source_dir = {new_source_path}")
+        print(f"Setting updated: source_dir = {new_source_path}")
         config_updated = True
 
     if args.dest:
         new_dest_path = Path(args.dest).resolve()
 
         if not new_dest_path.is_dir():
-            print(f"Ошибка: директория '{new_dest_path}' не существует")
+            print(f"Error: directory '{new_dest_path}' does not exist")
             sys.exit(1)
 
         config.set("paths", "dest_dir", str(new_dest_path))
-        print(f"Настройка обновлена: dest_dir = {new_dest_path}")
+        print(f"Setting updated: dest_dir = {new_dest_path}")
         config_updated = True
 
     if config_updated:
@@ -52,7 +52,7 @@ def main():
 
     # Проверка позиционного аргумента для архивации
     if not args.folder_name:
-        print("Ошибка: укажите имя папки для упаковки\n")
+        print("Error: specify the folder name to pack\n")
         parser.print_help()
         sys.exit(1)
 
@@ -67,13 +67,13 @@ def main():
 
     # Проверка существования директорий
     if not source_dir.is_dir():
-        print(f"Ошибка: исходная директория '{source_dir}' не существует")
-        log_msg(log_file, f"Ошибка: исходная директория '{source_dir}' не существует")
+        print(f"Error: source directory '{source_dir}' does not exist")
+        log_msg(log_file, f"Error: source directory '{source_dir}' does not exist")
         sys.exit(1)
 
     if not target_path.is_dir():
-        print(f"Ошибка: Папка '{folder_name}' не найдена в '{source_dir}'")
-        log_msg(log_file, f"Ошибка: Папка '{folder_name}' не найдена в '{source_dir}'")
+        print(f"Error: folder '{folder_name}' not found in '{source_dir}'")
+        log_msg(log_file, f"Error: folder '{folder_name}' not found in '{source_dir}'")
         sys.exit(1)
 
     # Проверка свободного места
@@ -81,13 +81,13 @@ def main():
     free_space = shutil.disk_usage(dest_dir).free
 
     if target_size > free_space:
-        print("Ошибка: на диске слишком мало места для создания архива")
-        log_msg(log_file, f"Ошибка: недостаточно места. Требуется: {target_size} байт, свободно: {free_space} байт.")
+        print("Error: not enough disk space to create the archive")
+        log_msg(log_file, f"Error: not enough space. Required: {target_size} bytes, free: {free_space} bytes.")
         sys.exit(1)
     else:
         target_mb = round(target_size / 1048576)
         free_mb = round(free_space / 1048576)
-        log_msg(log_file, f"Проверка места пройдена: папка весит ~{target_mb} МБ, доступно ~{free_mb} МБ.")
+        log_msg(log_file, f"Space check passed: folder size is ~{target_mb} MB, available ~{free_mb} MB.")
 
     # Формирование имени и проверка на перезапись
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -95,20 +95,20 @@ def main():
     archive_path = dest_dir / archive_name
 
     if archive_path.exists():
-        answer = input(f"Файл {archive_name} уже существует, перезаписать его? (y/n)\n").strip().lower()
+        answer = input(f"File {archive_name} already exists, overwrite it? (y/n)\n").strip().lower()
         if answer == 'y':
-            print("Удаляем старый архив...")
+            print("Removing old archive...")
             archive_path.unlink()
         elif answer == 'n':
-            print("Отмена. Пропускаю упаковку.")
-            log_msg(log_file, f"Пропуск: архив '{archive_name}' уже существует (отмена перезаписи)")
+            print("Cancelled. Skipping packing.")
+            log_msg(log_file, f"Skipped: archive '{archive_name}' already exists (overwrite cancelled)")
             sys.exit(0)
         else:
-            print("Неверный ввод. Ожидается y или n. Выход.")
+            print("Invalid input. Expected y or n. Exiting.")
             sys.exit(1)
 
     # Архивация
-    print(f"Создаю архив {archive_name}...")
+    print(f"Creating archive {archive_name}...")
 
     result = subprocess.run(
         ["zip", "-r", "-q", "-y", str(archive_path), folder_name],
@@ -116,8 +116,8 @@ def main():
     )
 
     if result.returncode == 0:
-        print(f"Успех! Архив сохранён: {archive_path}")
-        log_msg(log_file, f"Успешно: '{folder_name}' упакован в '{archive_path}'")
+        print(f"Success! Archive saved: {archive_path}")
+        log_msg(log_file, f"Success: '{folder_name}' packed into '{archive_path}'")
 
         sync_enabled = config.getboolean("google", "google_sync", fallback=False)
         if sync_enabled:
@@ -125,29 +125,29 @@ def main():
             if config.getboolean("google", "auto_sync", fallback=False):
                 answer = 'y'
             else:
-                answer = input("Сохранить файл на google drive? (y/n)\n").strip().lower()
+                answer = input("Save file to Google Drive? (y/n)\n").strip().lower()
 
             if answer == "y":
                 credits_path = Path(config.get("google", "credentials_path"))
                 token_path = Path(config.get("google", "token_path"))
 
                 if not credits_path.exists():
-                    print("Синхронизация включена, но не найден creditials.json")
-                    print("mv ваш_файл ~/.config/fastzip/credentials.json")
+                    print("Synchronization is enabled, but creditials.json not found")
+                    print("mv your_file ~/.config/fastzip/credentials.json")
                     sys.exit(1)
                 else:
                     try:
                         from fastzip.drive import get_drive_service, upload_to_drive
 
-                        print("Сохраняю файл в Google drive...")
+                        print("Saving file to Google Drive...")
                         service = get_drive_service(credits_path, token_path)
                         file_id = upload_to_drive(service, archive_path)
 
                         if config.getboolean("google", "auto_share", fallback=False):
                             answer2 = "y"
                         else:
-                            answer2 = input(f"Файл успешно загружен в Google Drive! (ID: {file_id}). Открыть доступ к нему по ссылке? (y/n)\n").strip().lower()
-                        log_msg(log_file, f"Загружено в облако: {archive_name}")
+                            answer2 = input(f"File successfully uploaded to Google Drive! (ID: {file_id}). Share it via link? (y/n)\n").strip().lower()
+                        log_msg(log_file, f"Uploaded to cloud: {archive_name}")
 
                         if answer2 == "y":
                             try:
@@ -164,32 +164,32 @@ def main():
                                     fields = 'webViewLink'
                                 ).execute()
                                 clean_link = shared_file_link.get('webViewLink')
-                                print(f"Доступ успешно открыт: {clean_link}")
-                                log_msg(log_file, f"Доступ успешно открыт: {clean_link}")
+                                print(f"Access successfully granted: {clean_link}")
+                                log_msg(log_file, f"Access successfully granted: {clean_link}")
 
                                 sys.exit(0)
 
                             except Exception as e:
-                                print(f"Ошибка при открытие доступа файла: {e}")
-                                log_msg(log_file, f"Ошибка при открытие доступа файла: {e}")
+                                print(f"Error granting access to the file: {e}")
+                                log_msg(log_file, f"Error granting access to the file: {e}")
                             sys.exit(1)
 
                         else:
-                            print("Завершаю работу.")
+                            print("Exiting.")
                             sys.exit(0)
 
                     except Exception as e:
-                        print(f"Ошибка при загрузке в облако: {e}")
-                        log_msg(log_file, f"Ошибка загрузки в Google Drive: {e}")
+                        print(f"Error uploading to cloud: {e}")
+                        log_msg(log_file, f"Error uploading to cloud: {e}")
                         sys.exit(1)
             else:
-                print("Завершаю работу.")
+                print("Exiting.")
                 sys.exit(0)
 
 
     else:
-        print("Произошла ошибка при создании архива.")
-        log_msg(log_file, f"Ошибка: сбой команды zip при упаковке '{folder_name}'")
+        print("An error occurred while creating the archive.")
+        log_msg(log_file, f"Error: zip command failed while packing '{folder_name}'")
         sys.exit(1)
 
 if __name__ == "__main__":
