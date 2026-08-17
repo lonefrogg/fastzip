@@ -10,38 +10,34 @@ def load_config() -> configparser.ConfigParser:
     if CONFIG_FILE.exists():
         config.read(CONFIG_FILE, encoding="utf-8")
 
-    config_changed = False
+    default_saves = str(Path.home() / ".local/share/atlauncher/instances/job12110/saves")
+    default_zips = str(Path.home() / "Documents/work/worldzips")
+    config_updated = False
 
-    if not config.has_section("paths"):
-        config.add_section("paths")
-        default_saves = str(Path.home() / ".local/share/atlauncher/instances/job12110/saves")
-        default_zips = str(Path.home() / "Documents/work/worldzips")
-        config.set("paths", "source_dir", default_saves)
-        config.set("paths", "dest_dir", default_zips)
-        config_changed = True
+    sections = {
+        "paths" : {
+            "source_dir" : default_saves,
+            "dest_dir" : default_zips
+        },
+        "google" : {
+            "google_sync" : "false",
+            "auto_sync" : "false",
+            "auto_share" : "false",
+            "credentials_path" : str(CONFIG_DIR / "credentials.json"),
+            "token_path" : str(CONFIG_DIR / "token.json")
+        }
+    }
 
-    if not config.has_section("google"):
-        config.add_section("google")
-        config.set("google", "credentials_path", str(CONFIG_DIR / "credentials.json"))
-        config.set("google", "token_path", str(CONFIG_DIR / "token.json"))
-        config_changed = True
+    for section_name, section_dict in sections.items():
+        if not config.has_section(section_name):
+            config.add_section(section_name)
+            config_updated = True
+        for option_name, option_value in section_dict.items():
+            if not config.has_option(section_name, option_name):
+                config.set(section_name, option_name, option_value)
+                config_updated = True
 
-
-    if not config.has_option("google", "google_sync"):
-        config.set("google", "google_sync", "false")
-        config_changed = True
-
-
-    if not config.has_option("google", "auto_sync"):
-        config.set("google", "auto_sync", "false")
-        config_changed = True
-
-    if not config.has_option("google", "auto_share"):
-        config.set("google", "auto_share", "false")
-        config_changed = True
-
-
-    if config_changed:
+    if config_updated:
         save_config(config)
 
     return config
