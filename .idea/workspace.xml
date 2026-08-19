@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bca83267-688a-4348-8f51-951434216b24" name="Changes" comment="Upgraded config writing alghorim">
+    <list default="true" id="bca83267-688a-4348-8f51-951434216b24" name="Changes" comment="Ignoring register on answers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fastzip/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastzip/cli.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fastzip/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastzip/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +189,31 @@
       <option name="project" value="LOCAL" />
       <updated>1786993000166</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="log writing">
+      <option name="closed" value="true" />
+      <created>1786993393011</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1786993393011</updated>
+    </task>
+    <task id="LOCAL-00016" summary="log writing">
+      <option name="closed" value="true" />
+      <created>1786994522220</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1786994522220</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Ignoring register on answers">
+      <option name="closed" value="true" />
+      <created>1786994647201</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1786994647201</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -214,7 +239,10 @@
     <MESSAGE value="Syncronisation settings in config.ini fix" />
     <MESSAGE value="Auto syncronisation settings in config.ini fix" />
     <MESSAGE value="Upgraded config writing alghorim" />
-    <option name="LAST_COMMIT_MESSAGE" value="Upgraded config writing alghorim" />
+    <MESSAGE value="log writing" />
+    <MESSAGE value="English translate" />
+    <MESSAGE value="Ignoring register on answers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ignoring register on answers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

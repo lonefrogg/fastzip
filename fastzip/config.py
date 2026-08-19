@@ -10,8 +10,8 @@ def load_config() -> configparser.ConfigParser:
     if CONFIG_FILE.exists():
         config.read(CONFIG_FILE, encoding="utf-8")
 
-    default_saves = str(Path.home() / ".local/share/atlauncher/instances/job12110/saves")
-    default_zips = str(Path.home() / "Documents/work/worldzips")
+    default_saves = str(Path.home() / "~/Documnets")
+    default_zips = str(Path.home() / "~/Documents/work/worldzips")
     config_updated = False
 
     sections = {
